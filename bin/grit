@@ -1,0 +1,78 @@
+#!/bin/bash
+
+error() {
+    echo "[!] grit error"
+}
+
+handle_bash() {
+    local option="$2"
+    if [ "$option" == "ls" ]; then
+        exa -a --icons "$BIN_DIR"
+    elif [ "$option" == "cat" ]; then
+        local file="$3"
+        if [ -f "$BIN_DIR/$file" ]; then
+            bat "$BIN_DIR/$file"
+        else
+            echo "[!] file not found at: $BIN_DIR/$file"
+            error
+        fi
+    else
+        echo "[grit bash]"
+        BASH_FILE="$BIN_DIR/$option"
+        if [ -f "$BASH_FILE" ]; then
+            bash "$BASH_FILE" "${@:3}"
+        else
+            error
+        fi
+    fi
+}
+
+handle_python() {
+    local option="$2"
+    if [ "$option" == "ls" ]; then
+        exa -a --icons "$PYTHON_DIR"
+    elif [ "$option" == "cat" ]; then
+        local file="$3"
+        if [ -f "$PYTHON_DIR/$file" ]; then
+            bat "$PYTHON_DIR/$file"
+        else
+            echo "[!] file not found at: $PYTHON_DIR/$file"
+            error
+        fi
+    else
+        echo "[grit python]"
+        PYTHON_FILE="$PYTHON_DIR/$option"
+        if [ -f "$PYTHON_FILE" ]; then
+            python3 "$PYTHON_FILE" "${@:3}"
+        else
+            error
+        fi
+    fi
+}
+
+handle_deploy() {
+    local option="$2"
+    if [ "$option" == "ls" ]; then
+        exa -a --icons "$SYSTEM/installers"
+    else
+        SCRIPT_FILE="$SYSTEM/installers/$option.sh"
+        if [ -f "$SCRIPT_FILE" ]; then
+            bash "$SCRIPT_FILE"
+        else
+            error
+        fi
+    fi
+}
+
+main() {
+    local command="$1"
+    case "$command" in
+        bash) handle_bash "$@" ;;
+        python) handle_python "$@" ;;
+        deploy) handle_deploy "$@" ;;
+        *) echo "[!] no grit" ;;
+    esac
+}
+
+main "$@"
+
