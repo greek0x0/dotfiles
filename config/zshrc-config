@@ -1,0 +1,45 @@
+# workspace config
+WORKSPACE=$HOME/workspace
+WORKSPACE_CONF=$WORKSPACE/system/config
+
+## oh-my-zsh (current system)
+
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="pentest"
+#ZSH_THEME="theunraveler"
+plugins=(
+    git
+    archlinux
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    nmap
+    aliases
+)
+source $ZSH/oh-my-zsh.sh
+
+
+# other
+
+pokemon-colorscripts --no-title -s -r
+source <(fzf --zsh)
+
+## save history
+
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt appendhistory
+
+if [[ -d "$WORKSPACE/system" ]]; then 
+	# paths
+	source $WORKSPACE_CONF/pathfile
+	# bash functions 
+	source $WORKSPACE_CONF/functions
+	# aliases
+	source $WORKSPACE_CONF/aliasrc
+
+	# backup zshrc if needed
+	check_backup
+else
+	echo "no drive attached"
+fi

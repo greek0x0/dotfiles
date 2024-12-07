@@ -1,0 +1,47 @@
+#!/bin/zsh
+
+# current global paths
+
+WORKSPACE="$HOME/workspace"
+CONF="$WORKSPACE/configs"
+
+# system binaries
+export PATH="$WORKSPACE/system/bin:$PATH"
+
+# for workspace bash scripts
+export BIN_DIR="$WORKSPACE/bin"
+
+# for workspace python scripts 
+export PYTHON_DIR="$WORKSPACE/scripts"
+
+# system installers
+export SYSTEM="$WORKSPACE/system"
+export CONFIGS="$SYSTEM/config"
+
+KITTY_CONFIG_DIRECTORY="$CONFIGS"
+
+HOSTNAME=$(hostname)
+
+
+
+# current system paths
+current_system() {
+    export GEM_HOME="$HOME/.gem"
+    export PATH="$HOME/.gem/bin:$PATH"
+    export PATH="/home/greek/.gem/ruby/3.3.0/bin:$PATH"
+}
+
+# other 
+GIT_SSH_COMMAND="ssh -i $HOME/.ssh/greek0x0_github"
+
+# only change this on a new system
+CURRENT_SYSTEM=arch
+
+
+
+
+if [[ "$HOSTNAME" == $CURRENT_SYSTEM ]]; then
+    current_system
+fi
+
+

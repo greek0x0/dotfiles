@@ -1,0 +1,45 @@
+# navigation 
+alias wp='cd $HOME/workspace/'
+alias e='exit'
+alias themes='ls -a .oh-my-zsh/themes '
+alias note='cat $HOME/.cheat'
+alias todo='vim $HOME/.todo'
+
+alias py='python3'
+
+# ssh 
+alias o='ssh -i $HOME/.ssh/outbound $USER@outbound'
+alias c='ssh $USER@--RETRACTED--'
+
+# tmux
+alias tmux='tmux -f "$WORKSPACE/system/config/tmux"'
+alias t='tmux'
+alias ta='tmux attach'
+alias td='tmux detach'
+
+# red teaming 
+alias rscan='docker run -it --rm --name rustscan rustscan/rustscan:latest -t 3000 --tries 2 -b 8192 -u 16384 -a'
+alias as-kali='docker exec -it greek-kali $1'
+alias kali-shell='docker exec -it -u $USER -w $HOME greek-kali /bin/zsh'
+alias autorecon='docker exec -it -u $USER -w "$HOME" greek-kali "$HOME"/.local/bin/autorecon --output workspace/ctf/lab-challenges/$(cat workspace/ctf/.last_lab.txt)/results'
+alias k='docker start greek-kali; docker exec -it -u $USER -w $HOME greek-kali /bin/zsh'
+
+# threat intel
+alias mitre='python3 -m mitrecve crawl $1'
+alias vulns="mitrecve crawl $1"
+alias ibm="grit python ibm-make -u $1"
+
+# malware analysis 
+alias remnux='docker run --rm -it -p 69:69 -u remnux -v $HOME/malware:/home/remnux/files remnux/remnux-distro bash'
+
+# note taking -- needs fixing 
+alias prepnote='python3 $HOME/workspace/scripts/prepnote $1'
+
+
+# utils
+alias size='du -sh $1'
+alias git-remote='git remote set-url origin git@github.com:greek0x0/$(basename "$PWD").git'
+alias git-remote-new='git remote add origin git@github.com:greek0x0/$(basename "$PWD").git'
+
+# external
+alias parrot='curl parrot.live'

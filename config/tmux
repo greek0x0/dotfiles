@@ -1,0 +1,55 @@
+# Plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'Morantron/tmux-fingers'
+set -g @plugin 'ChanderG/tmux-notify'
+set -g @plugin 'IngoMeyer441/tmux-easy-motion'
+
+set -g @easy-motion-prefix "Space"
+
+unbind C-b
+set-option -g prefix C-c
+bind-key C-c send-prefix
+
+set -g default-terminal "screen-256color"
+set -as terminal-features ",tmux-256color:RGB"
+
+bind v source-file ~/.config/tmux/tmux.conf \; display-message "Config reloaded..."
+
+set -g pane-border-style 'fg=colour32 bg=default'
+set -g pane-active-border-style 'bg=default fg=colour86'
+
+set -g mouse on
+
+set -g history-limit 10000
+
+set-option -g status-justify centre
+set -g window-status-activity-style fg=red
+set -g window-status-bell-style fg=yellow
+set -g window-status-separator " | "
+set -g window-style default
+set -g status "on"
+set -g status-interval 2
+set -g focus-events on
+set -g status-style bg=default
+set-option -g status-position bottom
+set-option -g status-left ''
+set -g status-left-length 120
+set-option -g status-right ''
+set -g status-right-length 90
+set -g status-justify centre
+
+set -g escape-time 200
+
+bind S display-popup -E "\
+    tmux list-sessions -F '#{?session_attached,,#{session_name}}' |\
+    sed '/^$/d' |\
+    fzf --reverse --header jump-to-session --preview 'tmux capture-pane -pt {}'  |\
+    xargs tmux switch-client -t"
+
+set -g base-index 1
+set -g pane-base-index 1
+
+bind = split-window -h -c "#{pane_current_path}" \; split-window -v -c "#{pane_current_path}" \; select-pane -L
+
+run '~/.tmux/plugins/tpm/tpm'
